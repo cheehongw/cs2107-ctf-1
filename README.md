@@ -57,6 +57,8 @@ This is a textbook RSA. Given the modulus N, public exponent E, and ciphertext C
 
 In this case, the prime factors can be found on factordb.com:
 
+![image](https://user-images.githubusercontent.com/72195240/155871919-1536ee72-b337-49b7-97c0-7678cfdccfbc.png)
+
 ```python
 totient = (p-1)*(q-1) #calculate totient(n)
 d = pow(e, -1, totient) #d is the multiplicative inverse of (e mod totient(n))
@@ -74,10 +76,14 @@ Looking at the source code reveals that this is a stream cipher. It uses random 
 The service accepts a phrase entered by the user and concatenates the phrase with the flag to form the plaintext, which is XOR-ed with the extended key. As such, we can insert a 64 hexadecimal long phrase (which is 32 bytes) of zeros to create a plaintext which is the flag padded with 32 bytes of 0 at the front.
 
 When encrypted, the first 32 bytes of the ciphertext gives us the key since `k XOR 0 = k`.
+![image](https://user-images.githubusercontent.com/72195240/155871936-862b3eba-e743-4ae0-9d8c-40aaaaeb1f0b.png)
+
 
 The selected text in the image corresponds exactly to the secret key used. The remaining 54 hex characters corresponds to the XOR-ed flag.
 
 With the key in hand, we can truncate the key to be 54 characters long and XOR it with the remaining ciphertext to retrieve the flag.
+![image](https://user-images.githubusercontent.com/72195240/155871944-25601fb5-577f-439e-bc56-688fcbc5d849.png)
+
 
 **Flag: CS2107{my_x0r_607_cr4ck3d}**
 
@@ -193,6 +199,8 @@ With the key and c0 and p0 in hand, we can proceed to find `flag[1]`:
 Acknowledgements: https://blog.skullsecurity.org/2012/everything-you-need-to-know-about-hash-length-extension-attacks (hash_extender tool)
 
 In this case, first note from the source code that the secret is concatenated with the data before it is hashed. As such, the MAC generated is vulnerable to a hash length extension attack. In this case, we can use the hash_extender tool to perform the calculation for us. From the manual of the hash_extender tool:
+![image](https://user-images.githubusercontent.com/72195240/155871960-bdbc320a-2aa7-44e0-a479-a3b960ac6370.png)
+
 
 In this case,
 > d= original value which is stored in the users cookie
@@ -200,10 +208,14 @@ In this case,
 > a= `%3Cx%3EO%3A4%3A%22User%22%3A2%3A%7Bs%3A15%3A%22%00User%00userlevel%22%3Bi%3A2107%3Bs%3A14%3A%22%00User%00username%22%3Bs%3A11%3A%22God%22%3B%7D`, which is copied from the last part of the users cookie with the level modified.
 > f= SHA-256
 > l= 32 bytes, as mentioned in the source code
+![image](https://user-images.githubusercontent.com/72195240/155871967-953c77c5-770a-47dc-95de-da14c040080d.png)
 
 With the new signature and message, we can replace the values in the original cookies.
+![image](https://user-images.githubusercontent.com/72195240/155871970-bfcd2c57-4663-46f1-acb4-b2d4f3c79632.png)
 
 Refresh the page with the cookies and we are done!
+![image](https://user-images.githubusercontent.com/72195240/155871974-b3c67052-35f3-400e-9da7-3005c2744cdb.png)
+
 
 ### B.7 Secret AES Service (15 Points)
 
@@ -225,6 +237,8 @@ def oracle(toTest):
 ```
 
 We know that padding oracle attack is carried out between 2 consecutive cipher blocks. As such, define a function that accepts two ciphertext blocks. To crack the whole ciphertext, the final output would be:
+![image](https://user-images.githubusercontent.com/72195240/155871983-7508aab2-a319-4d27-b096-a175c92327a6.png)
+
 
 ```
 print(
