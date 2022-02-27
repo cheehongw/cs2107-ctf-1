@@ -11,15 +11,15 @@ n0 = p*q
 n1 = q*r
 n2 = p*r
 
-PHI0=(p-1)*(q-1)
-PHI1=(q-1)*(r-1)
-PHI2=(p-1)*(r-1)
-d0= pow(e, -1, PHI0)
-d1= pow(e, -1, PHI1)
-d2= pow(e, -1, PHI2)
+PHI0 = (p-1)*(q-1)
+PHI1 = (q-1)*(r-1)
+PHI2 = (p-1)*(r-1)
+d0 = pow(e, -1, PHI0)
+d1 = pow(e, -1, PHI1)
+d2 = pow(e, -1, PHI2)
 
-res=pow(c,d2, n2)
-res=pow(res,d1, n1)
-res=pow(res,d0, n0)
+res = pow(c,d2, n2)
+res = pow(res,d1, n1)
+res = pow(res,d0, n0)
 
 print(long_to_bytes(res))
